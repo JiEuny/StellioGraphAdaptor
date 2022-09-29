@@ -42,6 +42,8 @@ public class RelationshipAdaptor {
                     } catch (ArangoDBException e) {
                         System.out.println("Failed to get document: " + attribute.getAsJsonObject().get("object") + "; " + e.getMessage());
                     }
+//                } else {
+//                    System.out.println("***look: " + attribute.);
                 }
 
             }

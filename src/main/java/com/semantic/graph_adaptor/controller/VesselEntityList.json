@@ -1,0 +1,121 @@
+[
+  {
+    "id": "urn:NGSI-LD:Ship:374651000",
+    "type": "Ship",
+    "location": {
+      "type": "GeoProperty",
+      "observedAt": "",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -128.26693,
+          33.89075
+        ]
+      }
+    },
+    "cog": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 122.6
+    },
+    "sog": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 14.7
+    },
+    "heading": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 119
+    },
+    "rot": {
+      "type": "Property",
+      "observedAt": "",
+      "value": -8
+    },
+    "navstat": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 15
+    },
+    "imo": {
+      "type": "Property",
+      "value": 9111802
+    },
+    "name": {
+      "type": "Property",
+      "value": "ENCHANTMENT OTS"
+    },
+    "callsign": {
+      "type": "Property",
+      "value": "C6FZ7"
+    },
+    "typeOfVessel": {
+      "type": "Property",
+      "value": 60
+    },
+    "aisDevicePosition": {
+      "type": "Property",
+      "value": {
+        "aDistanceToBow": 49,
+        "bDistanceToStern": 253,
+        "cDistanceToPort": 17,
+        "dDistanceToStarboard": 15
+      }
+    },
+    "draught": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 7.2
+    },
+    "destination": {
+      "type": "Relationship",
+      "observedAt": "",
+      "object": "urn:NGSI-LD:Port:CNSHG",
+      "estimatedTimeOfArrival": {
+        "type": "Property",
+        "value": "07-18 22:30"
+      }
+    }
+  },
+  {
+    "id": "urn:NGSI-LD:Station:2557",
+    "type": "Station",
+    "lastUpdate": {
+      "type": "Property",
+      "observedAt": "",
+      "value": "2021-07-12 07:25:01 GMT"
+    },
+    "country": {
+      "type": "Property",
+      "value": "United Kingdom"
+    },
+    "city": {
+      "type": "Property",
+      "value": "Grass"
+    },
+    "shipsCoverageCount": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 25
+    },
+    "uniqueShipsCount": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 6
+    }
+  },
+  {
+    "id": "urn:NGSI-LD:Port:CNSHG",
+    "type": "Port",
+    "numberOfExpectedArrival": {
+      "type": "Property",
+      "observedAt": "",
+      "value": 0
+    },
+    "name": {
+      "type": "Property",
+      "value": "CNSHG"
+    }
+  }
+]

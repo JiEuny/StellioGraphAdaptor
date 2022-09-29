@@ -19,12 +19,12 @@ import java.io.FileReader;
 public class HttpController {
 
     RestTemplate restTemplate = new RestTemplate();
-    String brokerUrl = "https://stellio-dev.eglobalmark.com/ngsi-ld/v1";
-    String brokerUrl_Beekeeper = "/entities?type=Beekeeper";
-    String brokerUrl_BeeHive = "/entities?type=BeeHive";
-//    String brokerUrl_Sensor = "/entities?type=Sensor";
-//    String brokerUrl_Sensor = "/entities/urn:ngsi-ld:Sensor:02_jieunTest";
-    String brokerUrl_Apiary = "/entities?type=Apiary";
+    String brokerUrl = "https://stellio-dev.eglobalmark.com/ngsi-ld/v1/entities";
+    String brokerUrl_Beekeeper = "?type=Beekeeper";
+    String brokerUrl_BeeHive = "?type=BeeHive";
+//    String brokerUrl_Sensor = "/urn:ngsi-ld:Sensor:02_jieunTest";
+    String brokerUrl_Apiary = "?type=Apiary";
+
     HttpHeaders headers = new HttpHeaders();
     NodeSeparator adaptor = new NodeSeparator();
 
@@ -61,31 +61,7 @@ public class HttpController {
             adaptor.nodeSeparator(jsonObject, arangoDB);
         }
 
-//        String result_sensor = restTemplate.exchange(brokerUrl+brokerUrl_Sensor, HttpMethod.GET, entity, String.class).getBody();
-
-//        System.out.println(result_sensor);
-
-//        JsonParser parser_sensor = new JsonParser();
-//        JsonElement jsonElement_sensor = parser_sensor.parse(result_sensor);
-//        JsonArray jsonArray_sensor = jsonElement_sensor.getAsJsonArray();
-//
-//        for(int i = 0; i < jsonArray_sensor.size(); i++) {
-//            JsonObject jsonObject = jsonArray_sensor.get(i).getAsJsonObject();
-//            adaptor.nodeSeparator(jsonObject, arangoDB);
-//        }
-
-//        JsonParser parser_sensor = new JsonParser();
-////        JsonElement jsonElement_sensor = parser_sensor.parse(result_sensor);
-////        JsonArray jsonArray_sensor = jsonElement_sensor.getAsJsonArray();
-//
-////        for(int i = 0; i < jsonArray_sensor.size(); i++) {
-//            JsonObject jsonObjectSensor = parser_sensor.parse(result_sensor).getAsJsonObject();
-//            adaptor.nodeSeparator(jsonObjectSensor, arangoDB);
-////        }
-
         String result_apiary = restTemplate.exchange(brokerUrl+brokerUrl_Apiary, HttpMethod.GET, entity, String.class).getBody();
-
-//        System.out.println(result_sensor);
 
         JsonParser parser_apiary = new JsonParser();
         JsonElement jsonElement_apiary = parser_apiary.parse(result_apiary);
@@ -96,6 +72,31 @@ public class HttpController {
             adaptor.nodeSeparator(jsonObject, arangoDB);
         }
 
+    }
+
+    public void getVesselEntities(ArangoDB arangoDB) {
+        headers.set("Accept", "application/json");
+        headers.set("Content-Type", "application/ld+json");
+
+        String vesselFile = "/src/main/java/com/semantic/graph_adaptor/controller/VesselEntityList.json";
+
+        FileReader reader = null;
+
+        try {
+            reader = new FileReader(System.getProperty("user.dir") + vesselFile);
+        } catch (FileNotFoundException e) {
+
+        }
+
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(reader);
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+        for (int i = 0; i<jsonArray.size(); i++) {
+            System.out.println(jsonArray.get(i));
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            adaptor.nodeSeparator(jsonObject, arangoDB);
+        }
     }
 
     public void createSubscription() {
