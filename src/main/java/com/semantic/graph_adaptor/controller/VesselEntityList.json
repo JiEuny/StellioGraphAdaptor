@@ -1,6 +1,6 @@
 [
   {
-    "id": "urn:NGSI-LD:Ship:374651000",
+    "id": "urn:ngsi-ld:Ship:374651000",
     "type": "Ship",
     "location": {
       "type": "GeoProperty",
@@ -71,7 +71,7 @@
     "destination": {
       "type": "Relationship",
       "observedAt": "",
-      "object": "urn:NGSI-LD:Port:CNSHG",
+      "object": "urn:ngsi-ld:Port:Dubai",
       "estimatedTimeOfArrival": {
         "type": "Property",
         "value": "07-18 22:30"
@@ -79,7 +79,7 @@
     }
   },
   {
-    "id": "urn:NGSI-LD:Station:2557",
+    "id": "urn:ngsi-ld:Station:2557",
     "type": "Station",
     "lastUpdate": {
       "type": "Property",
@@ -106,16 +106,52 @@
     }
   },
   {
-    "id": "urn:NGSI-LD:Port:CNSHG",
-    "type": "Port",
-    "numberOfExpectedArrival": {
-      "type": "Property",
-      "observedAt": "",
-      "value": 0
+    "city" : {
+      "value" : "Dubai",
+      "type" : "Property"
     },
-    "name": {
-      "type": "Property",
-      "value": "CNSHG"
-    }
+    "name" : {
+      "value" : "Dubai",
+      "type" : "Property"
+    },
+    "alias" : {
+      "value" : [ ],
+      "type" : "Property"
+    },
+    "regions" : {
+      "value" : [ ],
+      "type" : "Property"
+    },
+    "location" : {
+      "value" : {
+        "coordinates" : [ 55.27, 25.25 ],
+        "type" : "Point"
+      },
+      "type" : "GeoProperty"
+    },
+    "province" : {
+      "value" : "Dubayy [Dubai]",
+      "type" : "Property"
+    },
+    "timezone" : {
+      "value" : "Asia/Dubai",
+      "type" : "Property"
+    },
+    "unlocs" : {
+      "value" : [ "AEDXB" ],
+      "type" : "Property"
+    },
+    "code" : {
+      "value" : "52005",
+      "type" : "Property"
+    },
+    "@context" : [ "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/vessel/jsonld-contexts/vessel-compound.jsonld" ],
+    "type" : "Port",
+    "numberOfExpectedArrival" : {
+      "type" : "Property",
+      "value" : 0,
+      "observedAt" : "2020-06-11T11:00:00Z"
+    },
+    "id" : "urn:ngsi-ld:Port:Dubai"
   }
 ]
