@@ -1,10 +1,13 @@
 [
   {
+    "@context": [
+      "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/vessel/jsonld-contexts/vessel-compound.jsonld"
+    ],
     "id": "urn:ngsi-ld:Ship:374651000",
     "type": "Ship",
     "location": {
       "type": "GeoProperty",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": {
         "type": "Point",
         "coordinates": [
@@ -15,27 +18,27 @@
     },
     "cog": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 122.6
     },
     "sog": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 14.7
     },
     "heading": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 119
     },
     "rot": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": -8
     },
     "navstat": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 15
     },
     "imo": {
@@ -65,12 +68,12 @@
     },
     "draught": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 7.2
     },
     "destination": {
       "type": "Relationship",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "object": "urn:ngsi-ld:Port:Dubai",
       "estimatedTimeOfArrival": {
         "type": "Property",
@@ -79,11 +82,14 @@
     }
   },
   {
+    "@context": [
+      "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/vessel/jsonld-contexts/vessel-compound.jsonld"
+    ],
     "id": "urn:ngsi-ld:Station:2557",
     "type": "Station",
     "lastUpdate": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": "2021-07-12 07:25:01 GMT"
     },
     "country": {
@@ -96,12 +102,12 @@
     },
     "shipsCoverageCount": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 25
     },
     "uniqueShipsCount": {
       "type": "Property",
-      "observedAt": "",
+      "observedAt": "2020-06-11T11:00:00Z",
       "value": 6
     }
   },
