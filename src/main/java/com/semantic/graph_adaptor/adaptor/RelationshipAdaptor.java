@@ -4,6 +4,9 @@ import com.arangodb.ArangoCursor;
 import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDBException;
 import com.arangodb.entity.BaseDocument;
+import com.arangodb.entity.BaseEdgeDocument;
+import com.arangodb.entity.DocumentCreateEntity;
+import com.arangodb.model.DocumentCreateOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -27,23 +30,35 @@ public class RelationshipAdaptor {
 
             JsonElement attribute = iterator.next().getValue();
             String attName = iteratorKey.next();
-//            System.out.println(attribute);
 
             if (attribute.isJsonObject() == true) {
 
                 if (attribute.getAsJsonObject().get("type").toString().equals("\"Relationship\"")) {
-//                    System.out.println(attribute.getAsJsonObject().get("object"));
+                    BaseEdgeDocument document = new BaseEdgeDocument();
+                    document.setFrom(body.get("_from").toString().replaceAll("\"", ""));
+                    document.setTo(entityColl + "/" + attribute.getAsJsonObject().get("object").toString().replaceAll("\"", ""));
+                    document.addAttribute("attributeName", attName);
 
+                    Iterator<String> iteratorKey1 = attribute.getAsJsonObject().keySet().iterator();
+                    while (iteratorKey1.hasNext()) {
+                        String key = iteratorKey1.next();
+
+                        if(key.equals("observedAt")) {
+                            document.addAttribute("observedAt", attribute.getAsJsonObject().get("observedAt").toString().replace("\"", ""));
+                        } else if (key.equals("type")) {
+                            System.out.println("test");
+                        } else if (key.equals("object")) {
+                            System.out.println("test");
+                        } else {
+                            document.addAttribute(key, attribute.getAsJsonObject().get(key));
+                        }
+                    }
                     try {
-//                        BaseDocument document = arangoDB.db(dbName).collection(entityColl).getDocument(attribute.getAsJsonObject().get("object").toString().replaceAll("\"",""), BaseDocument.class);
-//                        System.out.println(document.getKey());
-                        String query = "INSERT { _from: " + body.get("_from") + ", _to: \"" + entityColl + "/" + attribute.getAsJsonObject().get("object").toString().replaceAll("\"", "") + "\", attributeName: \"" + attName + "\", attributeType: " + attribute.getAsJsonObject().get("type") + " } INTO " + edgeColl ;
-                        ArangoCursor<String> cursor = arangoDB.db(dbName).query(query, null, null, String.class);
+                        BaseEdgeDocument result = arangoDB.db(dbName).collection(edgeColl).insertDocument(document, new DocumentCreateOptions().returnNew(true)).getNew();
+                        System.out.println("Relationship Edge created: " + result.getId());
                     } catch (ArangoDBException e) {
                         System.out.println("Failed to get document: " + attribute.getAsJsonObject().get("object") + "; " + e.getMessage());
                     }
-//                } else {
-//                    System.out.println("***look: " + attribute.);
                 }
 
             }
