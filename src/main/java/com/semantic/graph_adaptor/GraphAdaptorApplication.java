@@ -19,6 +19,7 @@ public class GraphAdaptorApplication {
 //        httpController.createSubscription();
 //        httpController.getEntities(arangoDB);
         httpController.getVesselEntities(arangoDB);
+        httpController.notificationHandle(arangoDB);
     }
 
 }

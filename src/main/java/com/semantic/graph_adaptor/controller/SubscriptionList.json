@@ -1,18 +1,22 @@
 [
   {
-    "id": "urn:ngsi-ld:Subscription:Sensor",
+    "id": "urn:ngsi-ld:Subscription:Beekeeper",
     "type": "Subscription",
     "entities": [
       {
-        "type": "Sensor"
+        "type": "Beekeeper"
       }
     ],
     "notification": {
       "format": "normalized",
       "endpoint": {
-        "uri": "http://localhost:8081/notify",
+        "uri": "https://781cc29e-2539-4787-85db-3ba7de38eeab.mock.pstmn.io",
         "accept": "application/json"
       }
-    }
+    },
+    "@context": [
+      "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/apic/jsonld-contexts/apic-compound.jsonld",
+      "http://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ]
   }
 ]

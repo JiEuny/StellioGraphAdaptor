@@ -3,6 +3,7 @@ package com.semantic.graph_adaptor.controller;
 import com.arangodb.ArangoDB;
 import com.google.gson.*;
 import com.semantic.graph_adaptor.adaptor.NodeSeparator;
+import com.semantic.graph_adaptor.adaptor.NotiAdaptor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.text.Style;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -19,20 +19,21 @@ import java.io.FileReader;
 public class HttpController {
 
     RestTemplate restTemplate = new RestTemplate();
-    String brokerUrl = "https://stellio-dev.eglobalmark.com/ngsi-ld/v1/entities";
-    String brokerUrl_Beekeeper = "?type=Beekeeper";
-    String brokerUrl_BeeHive = "?type=BeeHive";
+    String brokerUrl = "https://stellio-dev.eglobalmark.com/ngsi-ld/v1/";
+    String brokerUrl_Beekeeper = "entities?type=Beekeeper";
+    String brokerUrl_BeeHive = "entities?type=BeeHive";
 //    String brokerUrl_Sensor = "/urn:ngsi-ld:Sensor:02_jieunTest";
-    String brokerUrl_Apiary = "?type=Apiary";
+    String brokerUrl_Apiary = "/entities?type=Apiary";
 
     HttpHeaders headers = new HttpHeaders();
     NodeSeparator adaptor = new NodeSeparator();
+    NotiAdaptor notiAdaptor = new NotiAdaptor();
 
     public void getEntities(ArangoDB arangoDB) {
 
         headers.set("accept", "application/ld+json");
         headers.set("Link", "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/apic/jsonld-contexts/apic-compound.jsonld");
-        headers.set("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJwSzZPOXNBQnRuNGRaTkxScUlPN0t6RXVvUDVjWWh0TDI3clVYVURMZlRBIn0.eyJleHAiOjE2NjIxOTQ4MDQsImlhdCI6MTY2MjEwODQwNCwianRpIjoiMzRjNzJkN2UtN2FmMi00MThhLTkxMTgtZmM3ZGFmNzExNWFjIiwiaXNzIjoiaHR0cHM6Ly9zc28uZWdsb2JhbG1hcmsuY29tL2F1dGgvcmVhbG1zL3N0ZWxsaW8tZGV2IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImI4MDg0MjU3LTE5YmMtNDA3OC1hYjZlLWQ1MzU3OTU3ZGI2MiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImtldGktSmlldW4iLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInN0ZWxsaW8tY3JlYXRvciIsIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1zdGVsbGlvLWRldiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsia2V0aS1KaWV1biI6eyJyb2xlcyI6WyJ1bWFfcHJvdGVjdGlvbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTgzLjEwNi4xNjkuMTEzIiwiY2xpZW50SWQiOiJrZXRpLUppZXVuIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWtldGktamlldW4iLCJjbGllbnRBZGRyZXNzIjoiMTgzLjEwNi4xNjkuMTEzIn0.XI0JMbtFGoBp650iIvOuBE0AlKpnqGmSKzrK9VSJFO303yyMrSmWhAHEquv4FgxhhYLzGlAzQjH7l436rzOnNSJoUasiAVkTDXkj0ww7gzy7lpI8yP074zngzTwc2LYnzi9u3nQXTwifPsuafLDuCPnoE3lUFYGMGPEfp1z6liKxMkKOFGGs957zTJ6ch2Hh8sx4UIyU5kgOKSZWZcGMB2QbhP9gQrqeqx_azlbLGu3zrKRFd4xuwjFdgBj6bKbuZr3Wj65xNIE94tShGwo1BG81WTHpNZUnzMJj21xOBHeXP6xfF1aFnKs5ZBSgqnJ1QLD3X0v1wvUIoyk6JWTqUg");
+        headers.set("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJwSzZPOXNBQnRuNGRaTkxScUlPN0t6RXVvUDVjWWh0TDI3clVYVURMZlRBIn0.eyJleHAiOjE2NzAzMTg2OTgsImlhdCI6MTY3MDIzMjI5OCwianRpIjoiZTFhYTYyYTktNDUyZS00ZGFiLThkNDEtNWNhNzlmYzM3MGY5IiwiaXNzIjoiaHR0cHM6Ly9zc28uZWdsb2JhbG1hcmsuY29tL2F1dGgvcmVhbG1zL3N0ZWxsaW8tZGV2IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImI4MDg0MjU3LTE5YmMtNDA3OC1hYjZlLWQ1MzU3OTU3ZGI2MiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImtldGktSmlldW4iLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInN0ZWxsaW8tY3JlYXRvciIsIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1zdGVsbGlvLWRldiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsia2V0aS1KaWV1biI6eyJyb2xlcyI6WyJ1bWFfcHJvdGVjdGlvbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTAuNS4xLjEiLCJjbGllbnRJZCI6ImtldGktSmlldW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQta2V0aS1qaWV1biIsImNsaWVudEFkZHJlc3MiOiIxMC41LjEuMSJ9.VnnZFKWm22yt1SxRFb5OfePlgNxqXtx_RjN8HAO8RnDul-8sRZM94CjrdTtaoJsYOmZvNdbNU9x85o1B2dOvT4sXwYIfwmrfz11FIIw_x56P4ytN5mOMwkVOxrqtbXp8Z9g-eK9iPeUTqNI7jSIXJZbFHrb7wbHgJuFLMWxeKi9harhUXfMV0uuQnD2Emr70weXd098eER4CoA1Jr_BXq6fJfRlugkpkkqnB8qd_UHK1af5z7iQiK0fbelV4zdZa6DZHA8EecRNmQ0a9LbLQVYtCkf7lWpaSiPyMUHbMikgGsceuqoAQY87oimbD--58wt6XTbPrBkkoIusp-JFiHw");
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         String result_beek = restTemplate.exchange(brokerUrl+brokerUrl_Beekeeper, HttpMethod.GET, entity, String.class).getBody();
@@ -99,10 +100,28 @@ public class HttpController {
         }
     }
 
+    public void notificationHandle(ArangoDB arangoDB) {
+
+        String notificationFile = "/src/main/java/com/semantic/graph_adaptor/controller/NotificationList.json";
+
+        FileReader reader = null;
+
+        try {
+            reader = new FileReader(System.getProperty("user.dir") + notificationFile);
+        } catch (FileNotFoundException e) {
+
+        }
+
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(reader);
+        notiAdaptor.notiAdaptor(jsonElement.getAsJsonObject(), arangoDB);
+    }
+
     public void createSubscription() {
 
         headers.set("Accept", "application/json");
         headers.set("Content-Type", "application/ld+json");
+        headers.set("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJwSzZPOXNBQnRuNGRaTkxScUlPN0t6RXVvUDVjWWh0TDI3clVYVURMZlRBIn0.eyJleHAiOjE2NzAzMTg2OTgsImlhdCI6MTY3MDIzMjI5OCwianRpIjoiZTFhYTYyYTktNDUyZS00ZGFiLThkNDEtNWNhNzlmYzM3MGY5IiwiaXNzIjoiaHR0cHM6Ly9zc28uZWdsb2JhbG1hcmsuY29tL2F1dGgvcmVhbG1zL3N0ZWxsaW8tZGV2IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImI4MDg0MjU3LTE5YmMtNDA3OC1hYjZlLWQ1MzU3OTU3ZGI2MiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImtldGktSmlldW4iLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInN0ZWxsaW8tY3JlYXRvciIsIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1zdGVsbGlvLWRldiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsia2V0aS1KaWV1biI6eyJyb2xlcyI6WyJ1bWFfcHJvdGVjdGlvbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTAuNS4xLjEiLCJjbGllbnRJZCI6ImtldGktSmlldW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQta2V0aS1qaWV1biIsImNsaWVudEFkZHJlc3MiOiIxMC41LjEuMSJ9.VnnZFKWm22yt1SxRFb5OfePlgNxqXtx_RjN8HAO8RnDul-8sRZM94CjrdTtaoJsYOmZvNdbNU9x85o1B2dOvT4sXwYIfwmrfz11FIIw_x56P4ytN5mOMwkVOxrqtbXp8Z9g-eK9iPeUTqNI7jSIXJZbFHrb7wbHgJuFLMWxeKi9harhUXfMV0uuQnD2Emr70weXd098eER4CoA1Jr_BXq6fJfRlugkpkkqnB8qd_UHK1af5z7iQiK0fbelV4zdZa6DZHA8EecRNmQ0a9LbLQVYtCkf7lWpaSiPyMUHbMikgGsceuqoAQY87oimbD--58wt6XTbPrBkkoIusp-JFiHw");
 
         String subscriptionFile = "/src/main/java/com/semantic/graph_adaptor/controller/SubscriptionList.json";
 
@@ -119,9 +138,13 @@ public class HttpController {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
 
         for (int i = 0; i<jsonArray.size(); i++) {
-            HttpEntity<String> entity = new HttpEntity<String>(jsonArray.get(i).toString(), headers);
-            String result = restTemplate.exchange(brokerUrl+"/subscriptions", HttpMethod.POST, entity, String.class).getBody();
-            System.out.println("Subscription created: "+result);
+            try {
+                HttpEntity<String> entity = new HttpEntity<String>(jsonArray.get(i).toString(), headers);
+                String result = restTemplate.exchange(brokerUrl+"subscriptions", HttpMethod.POST, entity, String.class).getBody();
+                System.out.println("Subscription created: "+result);
+            } catch (Exception e) {
+                System.out.println("error: " +e);
+            }
         }
 
     }
