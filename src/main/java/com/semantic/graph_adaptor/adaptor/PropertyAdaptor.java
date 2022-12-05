@@ -55,7 +55,15 @@ public class PropertyAdaptor {
                 } else if (attribute.getAsJsonObject().get("type").toString().equals("\"GeoProperty\"")) {
                     DocumentCreateEntity<String> result = arangoDB.db(dbName).collection(propertyColl).insertDocument(attribute.getAsJsonObject().toString());
                     System.out.println("Property Vertex created: " + result.getId());
-                    String query = "INSERT { _from: " + body.get("_from") + ", _to: \"" + result.getId() + "\", attributeName: \"" + attName + "\", attributeType: " + attribute.getAsJsonObject().get("type") + " } INTO " + edgeColl ;
+
+                    String query;
+
+                    if(attribute.getAsJsonObject().has("observedAt")) {
+                        query = "INSERT { _from: " + body.get("_from") + ", _to: \"" + result.getId() + "\", attributeName: \"" + attName + "\", attributeType: " + attribute.getAsJsonObject().get("type") + ", from: \"" + attribute.getAsJsonObject().get("observedAt").toString().replace("\"", "") + "\" } INTO " + edgeColl ;
+                    } else {
+                        query = "INSERT { _from: " + body.get("_from") + ", _to: \"" + result.getId() + "\", attributeName: \"" + attName + "\", attributeType: " + attribute.getAsJsonObject().get("type") + " } INTO " + edgeColl ;
+                    }
+
                     ArangoCursor<String> cursor = arangoDB.db(dbName).query(query, null, null, String.class);
                 }
             }
