@@ -114,7 +114,12 @@ public class HttpController {
 
         JsonParser jsonParser = new JsonParser();
         JsonElement jsonElement = jsonParser.parse(reader);
-        notiAdaptor.notiAdaptor(jsonElement.getAsJsonObject(), arangoDB);
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+        for (int i = 0; i<jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            notiAdaptor.notiAdaptor(jsonObject, arangoDB);
+        }
     }
 
     public void createSubscription() {

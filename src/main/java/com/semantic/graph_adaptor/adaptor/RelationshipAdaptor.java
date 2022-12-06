@@ -45,6 +45,7 @@ public class RelationshipAdaptor {
 
                         if(key.equals("observedAt")) {
                             document.addAttribute("observedAt", attribute.getAsJsonObject().get("observedAt").toString().replace("\"", ""));
+                            document.addAttribute("from", attribute.getAsJsonObject().get("observedAt").toString().replace("\"", ""));
                         } else if (key.equals("type")) {
                             System.out.println("test");
                         } else if (key.equals("object")) {

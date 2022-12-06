@@ -74,7 +74,7 @@
     "destination": {
       "type": "Relationship",
       "observedAt": "2020-06-11T11:00:00Z",
-      "object": "urn:ngsi-ld:Port:Dubai",
+      "object": "urn:ngsi-ld:Port:CNSHG",
       "estimatedTimeOfArrival": {
         "type": "Property",
         "value": "07-18 22:30"
@@ -159,5 +159,33 @@
       "observedAt" : "2020-06-11T11:00:00Z"
     },
     "id" : "urn:ngsi-ld:Port:Dubai"
+  },
+  {
+    "@context": [
+      "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/vessel/jsonld-contexts/vessel-compound.jsonld"
+    ],
+    "id": "urn:ngsi-ld:Ship:95416",
+    "type": "Ship",
+    "createdAt": "2020-06-11T10:59:00.272956144Z",
+    "modifiedAt": "2022-12-05T10:59:00.273125333Z",
+    "destination": {
+      "type": "Relationship",
+      "observedAt": "2022-10-11T11:00:00Z",
+      "object": "urn:ngsi-ld:Port:Dubai",
+      "estimatedTimeOfArrival": {
+        "type": "Property",
+        "value": "07-18 22:30"
+      }
+    }
+  },
+  {
+    "@context" : [ "https://raw.githubusercontent.com/easy-global-market/ngsild-api-data-models/master/vessel/jsonld-contexts/vessel-compound.jsonld" ],
+    "type" : "Port",
+    "numberOfExpectedArrival" : {
+      "type" : "Property",
+      "value" : 0,
+      "observedAt" : "2020-06-11T11:00:00Z"
+    },
+    "id" : "urn:ngsi-ld:Port:CNSHG"
   }
 ]
